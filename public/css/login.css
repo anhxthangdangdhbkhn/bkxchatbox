@@ -1,0 +1,105 @@
+body {
+    background-color: #0099ff;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.loginContainer {
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border: 1px solid #dedede;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    margin-bottom: 20px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    background-color: #f2f2f2;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+  }
+  
+  /* Style the submit button */
+  input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+  }
+  /* Style the container for inputs */
+.container {
+    background-color: #f1f1f1;
+    padding: 10px;
+  }
+  
+  /* The message box is shown when the user clicks on the password field */
+  .message {
+    display:none;
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+  }
+  
+ 
+  
+  /* Add a green text color and a checkmark when the requirements are right */
+  .valid {
+    color: green;
+  }
+  
+  .valid:before {
+    position: relative;
+    color: rgb(6, 255, 159);
+    content: "✔";
+  }
+  
+  /* Add a red text color and an "x" when the requirements are wrong */
+  .invalid {
+    color: red;
+  }
+  
+  .invalid:before {
+    position: relative;
+    content: "✖";
+    color: red;
+    
+  }
+
+  /*Check register input*/
+
+  .checkinput{
+    border-color: rgb(0, 0, 0);
+  }
+
+  .checknotok{
+    border-color: rgb(255, 0, 0);
+  }
+
+  .checkok{
+    border-color: rgb(0, 0, 0);
+  }

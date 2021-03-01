@@ -1,0 +1,192 @@
+extends layouts/login-layout.pug
+
+block content
+    .loginContainer
+        h1 Register
+        form#registerForm(method="post", onsubmit="event.preventDefault(); validateForm();")
+
+            p.errorMessage #{errorMessage}
+
+            input(type="text",class="checkinput",id="firstName",name="firstName", placeholder="First name", value=firstName required="")
+            input(type="text",class="checkinput",id="lastName", name="lastName", placeholder="Last name", value= required="")
+            input(type="text",class="checkinput",id="username", name="username", placeholder="Username", value=username required="")
+            input(type="email",class="checkinput",id="email", name="email", placeholder="Email", value=email required="")
+            input#password(type="password", class="checkinput",name="password", placeholder="Password", required="")
+            input#passwordConf(type="password",class="checkinput", name="passwordConf", placeholder="Confirm password", required="")
+            <div id="message" class="message">
+            <h3>Password must contain the following:</h3>
+            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+            <p id="number" class="invalid">A <b>number</b></p>
+            <p id="length" class="invalid" >Minimum <b>8 characters</b></p>
+            </div>
+            input(type="submit", value="Login")
+
+
+        a(href="/login") Already have an account? Login here.
+    
+    script.
+        var passwordField = document.getElementById("password")
+        var passwordConfirmField = document.getElementById("passwordConf")
+        var form = document.getElementById("registerForm")
+        var myInput = document.getElementById("psw");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+        var checkPassFormat = false;
+        var pass="1";
+        var passcf="2";
+        var passcheck=false ;
+
+        passwordField.onfocus = function() {
+            if(checkPassFormat === false){
+                document.getElementById("message").style.display = "block";
+            }
+            
+        }
+        passwordField.onblur = function() {
+            
+            document.getElementById("message").style.display = "none";
+        }
+
+        passwordConfirmField.onkeyup = function(e) {
+            passcf = e.target.value
+            if(pass === passcf){
+                passcheck = true;
+            }else{
+                passcheck = false;
+            }
+            console.log("passcf: ",passcf)
+            
+
+            if(checkPassFormat === true){
+                passwordField.classList.remove("checkinput");
+                passwordField.classList.add("checkok");
+                passwordField.classList.remove("checknotok");
+
+            }else{
+                passwordField.classList.remove("checkinput");
+                passwordField.classList.add("checknotok");
+                passwordField.classList.remove("checkok");
+
+            };
+
+            if(checkPassFormat === true){
+                if( passcheck === true){
+                    passwordConfirmField.classList.remove("checkinput");
+                    passwordConfirmField.classList.add("checkok");
+                    passwordConfirmField.classList.remove("checknotok");
+                }else{
+                    passwordConfirmField.classList.remove("checkinput");
+                    passwordConfirmField.classList.add("checknotok");
+                    passwordConfirmField.classList.remove("checkok");
+                }
+            }else{
+                    passwordField.classList.remove("checkinput");
+                    passwordField.classList.add("checkok");
+                    passwordField.classList.remove("checknotok");
+            }
+        }
+
+        
+
+        passwordField.onkeyup = function(e) {
+
+            pass = e.target.value
+            if(pass === passcf){
+                passcheck = true;
+            }else{
+                passcheck = false;
+            }
+            console.log("Pass: ",pass)
+
+            var lowerCaseLetters = /[a-z]/g;
+            if(passwordField.value.match(lowerCaseLetters)) {  
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            var upperCaseLetters = /[A-Z]/g;
+            if(passwordField.value.match(upperCaseLetters)) {
+                capital.classList.remove("invalid");
+                capital.classList.add("valid");
+            } else {
+                capital.classList.remove("valid");
+                capital.classList.add("invalid");
+            }
+
+
+            var numbers = /[0-9]/g;
+            if(passwordField.value.match(numbers)) {  
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+            if(passwordField.value.length >= 8) {
+                length.classList.remove("invalid");
+                length.classList.add("valid");
+            } else {
+                length.classList.remove("valid");
+                length.classList.add("invalid");
+            }
+
+            if(passwordField.value.match(lowerCaseLetters) && passwordField.value.match(upperCaseLetters) && passwordField.value.match(numbers) && (passwordField.value.length >= 8)){
+                checkPassFormat = true;
+            }else{
+                checkPassFormat = false;
+            }
+
+
+            
+
+
+
+            
+
+            if(checkPassFormat === true){
+                passwordField.classList.remove("checkinput");
+                passwordField.classList.add("checkok");
+                passwordField.classList.remove("checknotok");
+            }else{
+                passwordField.classList.remove("checkinput");
+                passwordField.classList.add("checknotok");
+                passwordField.classList.remove("checkok");
+            };
+
+
+            if(checkPassFormat === true){
+                if(passcheck === true){
+                    passwordConfirmField.classList.remove("checkinput");
+                    passwordConfirmField.classList.add("checkok");
+                    passwordConfirmField.classList.remove("checknotok");
+                }else{
+                    passwordConfirmField.classList.remove("checkinput");
+                    passwordConfirmField.classList.add("checknotok");
+                    passwordConfirmField.classList.remove("checkok");
+                };
+            }else{
+                passwordField.classList.remove("checkinput");
+                passwordField.classList.add("checknotok");
+                passwordField.classList.remove("checkok");
+            };
+
+        }
+
+        function validateForm() {
+
+            if(checkPassFormat===true && passcheck === true) {
+                form.submit();
+            }
+            if(checkPassFormat === false){
+                document.getElementById("message").style.display = "block";
+            }
+
+            
+        }
