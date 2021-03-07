@@ -287,7 +287,7 @@ $(document).on("click", ".likeButton", (event) => {
         type: "PUT",
         success: (postData) => {
             
-            button.find("span").text(postData.likes.length || "");
+            button.find("span").text(postData.likes.length || "Like");
 
             if(postData.likes.includes(userLoggedIn._id)) {
                 button.addClass("active");
@@ -326,15 +326,51 @@ $(document).on("click", ".retweetButton", (event) => {
     })
 
 })
+$(document).on("click",".openComment",(event) => {
+    $(".isActiveComment").toggle();
+})
+$(document).on("click",".postComment",(event) => {
+    var text = $(event.target.closest(".p-2")).children(":first").children(".commentContent").val();
+    var commentDom = $(event.target.closest(".isActiveComment")).children(".comment");
+    var commentContent = creatComment(text);
+    commentDom.append(commentContent);
+})
+creatComment = function (text) {
+    return `<div class="comment-id media"> 
+                <a class="pr-3" href="#">
+                    <img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" />
+                </a>
+                <div class="media-body">
+                    <div class="row">
+                        <div class="col-12 d-flex">
+                                <h5>Simona Disa</h5> 
+                                <span>- 3 hours ago</span>
+                        </div>
+                    </div> 
+                    ${text}
+                    <div class="bg-white ">
+                        <div class="d-flex flex-row fs-12">
+                            <button class="like p-2 cursor likeButton postButtonContainer" id="btnLike">
+                                <i class='far fa-heart'></i><span class="ml-1">Like</span>
+                            </button>
+                            <div class="like p-2 cursor">
+                                <i class="fa fa-commenting-o">
+                                </i><span class="ml-1">Reply</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+}
 
-$(document).on("click", ".post", (event) => {
-    var element = $(event.target);
-    var postId = getPostIdFromElement(element);
+// $(document).on("click", ".post", (event) => {
+//     var element = $(event.target);
+//     var postId = getPostIdFromElement(element);
 
-    if(postId !== undefined && !element.is("button")) {
-        window.location.href = '/posts/' + postId;
-    }
-});
+//     if(postId !== undefined && !element.is("button")) {
+//         window.location.href = '/posts/' + postId;
+//     }
+// });
 
 $(document).on("click", ".followButton", (e) => {
     var button = $(e.target);
@@ -455,48 +491,119 @@ function createPostHtml(postData, largeFont = false) {
                     <button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class='fas fa-times'></i></button>`;
     }
 
-    return `<div class='post ${largeFontClass}' data-id='${postData._id}'>
-                <div class='postActionContainer'>
-                    ${retweetText}
-                </div>
-                <div class='mainContentContainer'>
-                    <div class='userImageContainer'>
-                        <img src='${postedBy.profilePic}'>
-                    </div>
-                    <div class='postContentContainer'>
-                        <div class='pinnedPostText'>${pinnedPostText}</div>
-                        <div class='header'>
-                            <a href='/profile/${postedBy.username}' class='displayName'>${displayName}</a>
-                            <span class='username'>@${postedBy.username}</span>
-                            <span class='date'>${timestamp}</span>
+    // return `<div class='post ${largeFontClass}' data-id='${postData._id}'>
+    //             <div class='postActionContainer'>
+    //                 ${retweetText}
+    //             </div>
+    //             <div class='mainContentContainer'>
+    //                 <div class='userImageContainer'>
+    //                     <img src='${postedBy.profilePic}'>
+    //                 </div>
+    //                 <div class='postContentContainer'>
+    //                     <div class='pinnedPostText'>${pinnedPostText}</div>
+    //                     <div class='header'>
+    //                         <a href='/profile/${postedBy.username}' class='displayName'>${displayName}</a>
+    //                         <span class='username'>@${postedBy.username}</span>
+    //                         <span class='date'>${timestamp}</span>
+    //                         ${buttons}
+    //                     </div>
+    //                     ${replyFlag}
+    //                     <div class='postBody'>
+    //                         <span>${postData.content}</span>
+    //                     </div>
+    //                     <div class='postFooter'>
+    //                         <div class='postButtonContainer'>
+    //                             <button data-toggle='modal' data-target='#replyModal'>
+    //                                 <i class='far fa-comment'></i>
+    //                             </button>
+    //                         </div>
+    //                         <div class='postButtonContainer green'>
+    //                             <button class='retweetButton ${retweetButtonActiveClass}'>
+    //                                 <i class='fas fa-retweet'></i>
+    //                                 <span>${postData.retweetUsers.length || ""}</span>
+    //                             </button>
+    //                         </div>
+    //                         <div class='postButtonContainer red'>
+    //                             <button class='likeButton ${likeButtonActiveClass}'>
+    //                                 <i class='far fa-heart'></i>
+    //                                 <span>${postData.likes.length || ""}</span>
+    //                             </button>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>`;
+    return `<div class="container mt-5 post" data-id='${postData._id}'>
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-12">
+            <div class="d-flex flex-column comment-section">
+                <div class="bg-white p-2">
+                    <div class="d-flex flex-row user-info">
+                        <img class="rounded-circle" src="${postedBy.profilePic}" width="40"> 
+                        <div class="d-flex flex-column justify-content-start ml-2">
+                            <span class="d-block font-weight-bold name">${displayName}</span>
+                            <span class="date text-black-50">${timestamp}</span>
+                        </div>
+                        <div class = "pinBtn">
                             ${buttons}
                         </div>
-                        ${replyFlag}
-                        <div class='postBody'>
-                            <span>${postData.content}</span>
-                        </div>
-                        <div class='postFooter'>
-                            <div class='postButtonContainer'>
-                                <button data-toggle='modal' data-target='#replyModal'>
-                                    <i class='far fa-comment'></i>
-                                </button>
-                            </div>
-                            <div class='postButtonContainer green'>
-                                <button class='retweetButton ${retweetButtonActiveClass}'>
-                                    <i class='fas fa-retweet'></i>
-                                    <span>${postData.retweetUsers.length || ""}</span>
-                                </button>
-                            </div>
-                            <div class='postButtonContainer red'>
-                                <button class='likeButton ${likeButtonActiveClass}'>
-                                    <i class='far fa-heart'></i>
-                                    <span>${postData.likes.length || ""}</span>
-                                </button>
+                    </div>
+                    <div class="mt-2">
+                        <p class="comment-text">${postData.content}</p>
+                    </div>
+                </div>
+                <div class="bg-white ">
+                    <div class="d-flex flex-row fs-12">
+                        <button class="like p-2 cursor likeButton postButtonContainer ${likeButtonActiveClass}" id="btnLike">
+                            <i class='far fa-heart'></i><span class="ml-1">${postData.likes.length || ""} Like</span>
+                        </button>
+                        <div class="like p-2 cursor openComment "><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                        <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                    </div>
+                </div>
+                <div>
+                <div class = "isActiveComment">
+                    <div class="comment">
+                        <div class="comment-id media"> 
+                            <a class="pr-3" href="#">
+                                <img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" />
+                            </a>
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-12 d-flex">
+                                            <h5>Simona Disa</h5> 
+                                            <span>- 3 hours ago</span>
+                                    </div>
+                                </div> 
+                                letters, as opposed to using 'Content here, content here', making it look like readable English.
+                                <div class="bg-white ">
+                                    <div class="d-flex flex-row fs-12">
+                                        <button class="like p-2 cursor likeButton postButtonContainer" id="btnLike">
+                                            <i class='far fa-heart'></i><span class="ml-1">Like</span>
+                                        </button>
+                                        <div class="like p-2 cursor">
+                                            <i class="fa fa-commenting-o">
+                                            </i><span class="ml-1">Reply</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>`;
+                    <div class="bg-light p-2">
+                        <div class="d-flex flex-row align-items-start">
+                            <img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                            <textarea class="form-control ml-1 shadow-none textarea commentContent"></textarea>
+                        </div>
+                        <div class="mt-2 text-right">
+                            <button class="btn btn-primary btn-sm shadow-none postComment" type="button">Post comment</button>
+                            <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>`;
 }
 
 function timeDifference(current, previous) {

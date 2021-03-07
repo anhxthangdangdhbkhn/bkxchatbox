@@ -16,8 +16,8 @@ class Database {
         this.connect();
     }
 
-    connect() {
-        mongoose.connect("mongodb+srv://admin:26071993@cluster0.jdrvs.mongodb.net/bachkinhxaychat?retryWrites=true&w=majority")
+    connect() {        
+        mongoose.connect("mongodb://admin:tien123@cluster0-shard-00-00.lpwwp.mongodb.net:27017,cluster0-shard-00-01.lpwwp.mongodb.net:27017,cluster0-shard-00-02.lpwwp.mongodb.net:27017/bachkinhxaychat?ssl=true&replicaSet=atlas-wt8avx-shard-0&authSource=admin&retryWrites=true&w=majority")
         .then(() => {
             console.log("database connection successful");
         })
