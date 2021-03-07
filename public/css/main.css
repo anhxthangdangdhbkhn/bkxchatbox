@@ -198,19 +198,19 @@ button span {
     font-weight: bold;
 }
 
-.postFooter {
+/* .postFooter {
     display: flex;
     align-items: center;
-}
+} */
 
-.postFooter .postButtonContainer {
+/* .postFooter .postButtonContainer {
     flex: 1;
     display: flex;
-}
+} */
 
-.postFooter .postButtonContainer button {
+/* .postButtonContainer button {
     padding: 2px 5px;
-}
+} */
 
 .header a:hover {
     text-decoration: underline;
@@ -221,29 +221,24 @@ button span {
     padding-right: 5px;
 }
 
-.postButtonContainer button:hover {
-    background-color: #d4edff;
-    color: var(--blue);
+#btnLike:hover {
+    color: var(--red);
     border-radius: 50%;
 }
 
-.postButtonContainer.red button.active {
+.postButtonContainer.active {
     color: var(--red);
 }
 
-.postButtonContainer.red button:hover {
-    color: var(--red);
-    background-color: var(--redBackground)
-}
 
-.postButtonContainer.green button.active {
+/* .postButtonContainer.green button.active {
     color: var(--green);
 }
 
 .postButtonContainer.green button:hover {
     color: var(--green);
     background-color: var(--greenBackground)
-}
+} */
 
 .postActionContainer {
     padding-left: 35px;
@@ -429,7 +424,10 @@ button span {
     /* This rule is very important, please don't ignore this */
     max-width: 100%;
 }
-
+.pinBtn {
+    position: absolute;
+    right: 0;
+}
 .pinButton.active {
     color: var(--blue);
 }
@@ -827,4 +825,43 @@ button span {
 
 #notificationList .active {
     background-color: white;
+}
+/* home */
+.date {
+    font-size: 12px
+}
+
+.comment-text {
+    font-size: 16px
+}
+
+.fs-12 {
+    font-size: 16px
+}
+
+.shadow-none {
+    box-shadow: none
+}
+
+.name {
+    color: #007bff
+}
+
+.cursor:hover {
+    color: blue
+}
+
+.cursor {
+    cursor: pointer
+}
+
+.textarea {
+    resize: none
+}
+.media img {
+    width: 40px;
+    height: 40px
+}
+.comment {
+    padding-left: 30px;
 }
